@@ -7,9 +7,10 @@ var TEMPLATES = (function() {
 
   return {
     precompile: function(names) {
+      var original_this = this
       for (var i in names) {
         $.get(_tUrl(names[i]), function(source) {
-          this.compileAndCache(names[i], source)
+          original_this.compileAndCache(names[i], source)
         })
       }
     },
@@ -31,7 +32,7 @@ var TEMPLATES = (function() {
       if (template) {
         renderCallback(template(context))
       } else {
-        $.get(_tUrl(name, compileCacheAndRender)
+        $.get(_tUrl(name, compileCacheAndRender))
       }
     }
   }
@@ -53,7 +54,7 @@ var Controller = {
   renderTweets: function(tweets) {
     for (var i in tweets) {
       TEMPLATES.render('tweet', tweets[i], this.appendTweet)
-    }}
+    }
   },
 
   appendTweet: function(html) {
